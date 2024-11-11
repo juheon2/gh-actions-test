@@ -1,0 +1,39 @@
+name: Building App Test
+
+run-name: ${{ github.actor }} is execute workflow Github Actions 🚀
+
+on:
+#  push:
+#    branches:
+#      - portal/dev/gha-test
+  workflow_dispatch: # Allows manual trigger from the GitHub UI
+    inputs: # Define input variables
+      environment:
+        description: 'Select the environment to deploy to'
+        required: true
+        default: 'development'
+        type: choice  # Allows a dropdown selection
+        options:
+          - development
+          - staging
+          - production
+      deploy_version:
+        description: 'Version to deploy'
+        required: true
+        default: 'latest'
+        type: string   # Allows entering a custom string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Starts out build job
+        run: |
+          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Display input values
+        run: |
+          echo "Environment selected: ${{ github.event.inputs.environment }}"
+          echo "Deploy version: ${{ github.event.inputs.deploy_version }}"
